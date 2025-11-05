@@ -1,8 +1,10 @@
 using DevSpot_CodeAlong.Constants;
 using DevSpot_CodeAlong.Data;
+using DevSpot_CodeAlong.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using DevSpot_CodeAlong.Models;
+using DevSpot_CodeAlong.Repositories;
 namespace DevSpot_CodeAlong
 {
     public class Program
@@ -13,6 +15,8 @@ namespace DevSpot_CodeAlong
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            
 
             //DatabasConnectio
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -28,7 +32,7 @@ namespace DevSpot_CodeAlong
             AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
+            builder.Services.AddScoped<IRepository<JobPosting>, JobPostingRepository>();
             var app = builder.Build();
 
 
