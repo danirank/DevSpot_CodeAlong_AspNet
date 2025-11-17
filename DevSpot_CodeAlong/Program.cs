@@ -4,7 +4,7 @@ using DevSpot_CodeAlong.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DevSpot_CodeAlong.Models;
-using DevSpot_CodeAlong.Repositories;
+
 namespace DevSpot_CodeAlong
 {
     public class Program
@@ -18,7 +18,7 @@ namespace DevSpot_CodeAlong
 
             
 
-            //DatabasConnectio
+            //DatabasConnection
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Database"));
