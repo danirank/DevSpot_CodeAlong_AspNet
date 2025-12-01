@@ -26,6 +26,14 @@ namespace DevSpot_CodeAlong.Controllers
         public async Task<IActionResult> Index()
         {
             var jobPosting = await _repository.GetAllAsync();
+
+            //Logik för att employer bara ska se sina egna jobbannonser
+            if (User.IsInRole(Roles.Employer))
+            {
+                var userId = _userManager.GetUserId(User);
+                jobPosting = jobPosting.Where(jp => jp.UserId == userId);
+            }
+
             return View(jobPosting);
         }
 
@@ -38,7 +46,8 @@ namespace DevSpot_CodeAlong.Controllers
 
         [Authorize(Roles = "Admin, Employer")]
         [HttpPost] 
-        //ANVänd ViewModel för att komma Runt Godkänt ModelState där t.ex UserID är rquired men inte fylls i i formuläret
+
+        //Använd ViewModel för att komma Runt Godkänt ModelState där t.ex UserID är rquired men inte fylls i i formuläret
         public async Task<IActionResult> Create(JobPostingViewModel jobPostingVm)
         {
             var jobPosting = new JobPosting()
